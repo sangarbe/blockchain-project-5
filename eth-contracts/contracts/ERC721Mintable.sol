@@ -143,7 +143,7 @@ contract ERC721 is Pausable, ERC165 {
 
     // @dev Internal function to mint a new token
     // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
-    function _mint(address to, uint256 tokenId) internal {
+    function _mint(address to, uint256 tokenId) internal whenNotPaused{
         require(to != address(0), "ERC721: invalid mint to the zero address");
         require(!_exists(tokenId), "ERC721: token already exists");
 
@@ -155,7 +155,7 @@ contract ERC721 is Pausable, ERC165 {
 
     // @dev Internal function to transfer ownership of a given token ID to another address.
     // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
-    function _transferFrom(address from, address to, uint256 tokenId) internal {
+    function _transferFrom(address from, address to, uint256 tokenId) internal whenNotPaused {
 
         require(ownerOf(tokenId) == from, "ERC721: from must be the owner of the token to transfer");
         require(to != address(0), "ERC721: can not transfer to the zero address");
