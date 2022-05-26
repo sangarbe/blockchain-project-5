@@ -65,7 +65,7 @@ contract('TestERC721Mintable', accounts => {
     })
   });
 
-  describe('have pausable capabilitie', function () {
+  describe('have pausable capabilities', function () {
     beforeEach(async function () {
       this.contract = await ERC721Mintable.new("SomeName", "SYM", "http://some.url/", {from: deployer});
     })
