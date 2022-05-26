@@ -437,6 +437,14 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 
 
 contract ERC721Mintable is ERC721Metadata {
+
+    constructor (
+        string memory name,
+        string memory symbol,
+        string memory baseTokenURI
+    ) ERC721Metadata(name, symbol, baseTokenURI) public {
+    }
+
     /**
      * @dev Function to mint tokens.
      * @param to The address that will receive the minted tokens.
