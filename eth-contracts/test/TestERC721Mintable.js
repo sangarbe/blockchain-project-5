@@ -8,8 +8,8 @@ contract('TestERC721Mintable', accounts => {
   const holder1 = accounts[1];
   const holder2 = accounts[2];
 
-  describe('match erc721 spec', function () {
-    beforeEach(async function () {
+  describe('match erc721 spec', () => {
+    beforeEach(async () => {
       this.contract = await ERC721Mintable.new("SomeName", "SYM", "http://some.url/", {from: deployer});
       await this.contract.mint(holder1, 1, "", {from: deployer})
       await this.contract.mint(holder1, 2, "", {from: deployer})
@@ -17,31 +17,31 @@ contract('TestERC721Mintable', accounts => {
       await this.contract.mint(holder2, 4, "", {from: deployer})
     })
 
-    it('should return total supply', async function () {
+    it('should return total supply', async () => {
       const supply = await this.contract.totalSupply.call();
       assert.equal(supply, 4);
     })
 
-    it('should get token balance', async function () {
+    it('should get token balance', async () => {
       let balance = await this.contract.balanceOf.call(holder1);
       assert.equal(balance, 3);
       balance = await this.contract.balanceOf.call(holder2);
       assert.equal(balance, 1);
     })
 
-    it('should return token uri', async function () {
+    it('should return token uri', async () => {
       const uri = await this.contract.tokenURI.call(1)
       assert.equal(uri, "http://some.url/1");
     })
 
-    it('should return deployer of token', async function () {
+    it('should return deployer of token', async () => {
       let address = await this.contract.ownerOf.call(1)
       assert.equal(address, holder1);
       address = await this.contract.ownerOf.call(4)
       assert.equal(address, holder2);
     })
 
-    it('should transfer token from one deployer to another', async function () {
+    it('should transfer token from one deployer to another', async () => {
       await this.contract.transferFrom(holder1, holder2, 1, {from: holder1})
       const address = await this.contract.ownerOf.call(1)
       assert.equal(address, holder2);
@@ -50,40 +50,40 @@ contract('TestERC721Mintable', accounts => {
     })
   });
 
-  describe('have ownership properties', function () {
-    beforeEach(async function () {
+  describe('have ownership properties', () => {
+    beforeEach(async () => {
       this.contract = await ERC721Mintable.new("SomeName", "SYM", "http://some.url/", {from: deployer});
     })
 
-    it('should fail when minting when address is not contract deployer', async function () {
+    it('should fail when minting when address is not contract deployer', async () => {
       await expectRevert(this.contract.mint(holder1, 1, "", {from: holder1}), "Ownable: caller is not the owner");
     })
 
-    it('should return contract deployer', async function () {
+    it('should return contract deployer', async () => {
       const owner = await this.contract.owner.call()
       assert.equal(owner, deployer);
     })
   });
 
-  describe('have pausable capabilities', function () {
-    beforeEach(async function () {
+  describe('have pausable capabilities', () => {
+    beforeEach(async () => {
       this.contract = await ERC721Mintable.new("SomeName", "SYM", "http://some.url/", {from: deployer});
     })
 
-    it('should be initially not paused', async function () {
-      const paused =  await this.contract.paused.call()
+    it('should be initially not paused', async () => {
+      const paused = await this.contract.paused.call()
       assert.equal(paused, false);
     })
 
 
-    it('should be paused only by owner', async function () {
+    it('should be paused only by owner', async () => {
       await expectRevert(this.contract.pause({from: holder1}), "Ownable: caller is not the owner");
       await this.contract.pause({from: deployer})
-      const paused =  await this.contract.paused.call()
+      const paused = await this.contract.paused.call()
       assert.equal(paused, true);
     })
 
-    it('should not mint or transfer if contract is paused', async function () {
+    it('should not mint or transfer if contract is paused', async () => {
       await this.contract.mint(holder1, 1, "", {from: deployer})
       await this.contract.pause({from: deployer})
 

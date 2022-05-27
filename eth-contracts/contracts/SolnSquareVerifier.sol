@@ -1,36 +1,51 @@
 pragma solidity >=0.4.21 <0.6.0;
+pragma experimental ABIEncoderV2;
 
-// TODO define a contract call to the zokrates generated solidity contract <Verifier> or <renamedVerifier>
+import "./ERC721Mintable.sol";
+import "./SquareVerifier.sol";
 
+contract SolnSquareVerifier is ERC721Mintable {
 
+    event SolutionAdded(address to, uint256 tokenId, bytes32 proofHash);
 
-// TODO define another contract named SolnSquareVerifier that inherits from your ERC721Mintable class
+    SquareVerifier private _verifier;
 
+    struct Solution {
+        address to;
+        uint256 tokenId;
+    }
 
-
-// TODO define a solutions struct that can hold an index & an address
-
-
-// TODO define an array of the above struct
-
-
-// TODO define a mapping to store unique solutions submitted
-
-
-
-// TODO Create an event to emit when a solution is added
+    mapping(bytes32 => Solution) private _solutions;
 
 
+    constructor (address verifierContract) ERC721Mintable(
+        "Real State Homes",
+        "RSH",
+        "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
+    ) public {
+        _verifier = SquareVerifier(verifierContract);
+    }
 
-// TODO Create a function to add the solutions to the array and emit the event
+    function addSolution(address to, uint256 tokenId, bytes32 proofHash) internal {
+        require(_solutions[proofHash].to == address(0), "SolnSquareVerifier: solution already used");
 
+        _solutions[proofHash]= Solution({to: to, tokenId: tokenId});
 
+        emit SolutionAdded(to, tokenId, proofHash);
+    }
 
-// TODO Create a function to mint new NFT only after the solution has been verified
-//  - make sure the solution is unique (has not been used before)
-//  - make sure you handle metadata as well as tokenSuplly
+    function mint(address to, uint256 tokenId, SquareVerifier.Proof memory proof, uint[2] memory inputs) public {
+        require(_verifier.verifyTx(proof, inputs), "SolnSquareVerifier: solution not verified");
 
-  
+        addSolution(to, tokenId, _getProofHash(proof, inputs));
+        super.mint(to, tokenId, "");
+    }
+
+    function _getProofHash(SquareVerifier.Proof memory proof, uint[2] memory inputs) internal pure returns (bytes32)
+    {
+        return keccak256(abi.encode(proof.a, proof.b, proof.c, inputs));
+    }
+}
 
 
 
