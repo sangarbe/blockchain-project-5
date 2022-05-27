@@ -31,7 +31,7 @@ contract('TestERC721Mintable', accounts => {
 
     it('should return token uri', async () => {
       const uri = await this.contract.tokenURI.call(1)
-      assert.equal(uri, "http://some.url/1");
+      assert.equal(uri, "http://some.url/1.json");
     })
 
     it('should return deployer of token', async () => {

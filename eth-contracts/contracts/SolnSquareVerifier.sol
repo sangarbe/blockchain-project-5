@@ -21,7 +21,7 @@ contract SolnSquareVerifier is ERC721Mintable {
     constructor (address verifierContract) ERC721Mintable(
         "Real State Homes",
         "RSH",
-        "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
+        "https://raw.githubusercontent.com/sangarbe/blockchain-project-5/master/metadata/"
     ) public {
         _verifier = SquareVerifier(verifierContract);
     }

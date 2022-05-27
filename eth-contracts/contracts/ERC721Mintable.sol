@@ -422,7 +422,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
         string memory _tokenURI = _tokenURIs[tokenId];
 
         if (bytes(_tokenURI).length == 0) {
-            _tokenURI = uint2str(tokenId);
+            _tokenURI = strConcat(uint2str(tokenId), ".json");
         }
 
         return string(strConcat(_baseTokenURI, _tokenURI));
