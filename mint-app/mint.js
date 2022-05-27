@@ -60,13 +60,14 @@ const App = {
   },
 
   bindEvents: () => {
-    $('button').on('click', App.handleMint);
+    $('#btnMint').on('click', App.handleMint);
+    $('#btnUri').on('click', App.handleTokenUri);
   },
 
   readData: async () => {
     return {
       tokenId: $("#tokenId").val(),
-      proofJson: JSON.parse($("#proofJson").val()),
+      proofJson: JSON.parse($("#proofJson").val() || "{}"),
     }
   },
 
@@ -78,6 +79,18 @@ const App = {
       await App.initAccount();
       await App.contract.methods.mint(App.account, data.tokenId, data.proofJson.proof, data.proofJson.inputs).send({from: App.account})
       console.log(`minted ${data.tokenId} to ${App.account}`);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  handleTokenUri: async (event) => {
+    event.preventDefault();
+    try {
+      const data = await App.readData();
+      await App.initAccount();
+      const uri = await App.contract.methods.tokenURI(data.tokenId).call({from: App.account})
+      console.log(`uri ${uri}`);
     } catch (error) {
       console.error(error);
     }
