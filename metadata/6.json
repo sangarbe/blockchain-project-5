@@ -1,0 +1,15 @@
+{
+  "name": "Test Home 6",
+  "description": "The home number 6",
+  "image": "https://raw.githubusercontent.com/sangarbe/blockchain-project-5/master/metadata/6.jpeg",
+  "attributes": [
+    {
+      "trait_type": "Rooms",
+      "value": "5"
+    },
+    {
+      "trait_type": "Pool",
+      "value": "Yes"
+    }
+  ]
+}
