@@ -33,8 +33,8 @@ truffle test
 
 ## Addresses (Rinkeby)
 
-* SquareVerifier: 0x0A75D67724fd93D95fDd7c8050E2152f95405827
-* SolnSquareVerifier: 0x32DE2a28b6e6EC44782b757E688C596304697c49
+* SquareVerifier: 0x72Cb81Def10a4c697879364B2B2c3bD841a10F82
+* SolnSquareVerifier: 0xD04effB95fC3ffd06B377FdAA72cfCDdB1F21C7c
 * Deployer account: 0xbd59a7cAF8C608c61F8787e8E7F8C19987F48136
 
 ## Abi's
