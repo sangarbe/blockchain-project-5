@@ -37,6 +37,10 @@ truffle test
 * SolnSquareVerifier: 0xD04effB95fC3ffd06B377FdAA72cfCDdB1F21C7c
 * Deployer account: 0xbd59a7cAF8C608c61F8787e8E7F8C19987F48136
 
+## Opensea URL
+
+https://testnets.opensea.io/collection/real-state-homes-v2
+
 ## Abi's
 
 * SquareVerifier:
